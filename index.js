@@ -1,4 +1,7 @@
-const http = require('http');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 console.log('\033c'); // clear terminal
 console.log('Panasonic AW-RP150 Selected Camera AUX Switcher');
 
@@ -99,7 +102,10 @@ function sendRequestToStreamDeck(bank,button) {
  */
 var websocketClients = new Array();
 
-var io = require('socket.io')(http);
+http.listen(3000, () => {
+  console.log('Websockets listening on *:3000');
+});
+
 // Authentication
 io.use(function(socket, next){
   // console.log("Query: ", socket.handshake.query);
