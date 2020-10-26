@@ -1,6 +1,7 @@
 var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var http = require('http');
+var httpServer = http.createServer(app);
+var io = require('socket.io')(httpServer);
 
 console.log('\033c'); // clear terminal
 console.log('Panasonic AW-RP150 Selected Camera AUX Switcher');
@@ -102,7 +103,7 @@ function sendRequestToStreamDeck(bank,button) {
  */
 var websocketClients = new Array();
 
-http.listen(3000, () => {
+httpServer.listen(3000, () => {
   console.log('Websockets listening on *:3000');
 });
 
