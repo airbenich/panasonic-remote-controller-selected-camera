@@ -102,9 +102,10 @@ function sendRequestToStreamDeck(bank,button) {
  * 
  */
 var websocketClients = new Array();
+var websocketPort = 3000;
 
-httpServer.listen(3000, () => {
-  console.log('Websockets listening on *:3000');
+httpServer.listen(websocketPort, () => {
+  console.log('Websockets listening on *:' +  websocketPort);
 });
 
 // Authentication
