@@ -58,15 +58,15 @@ server.on('connection', function(socket) {
 });
 
 var cameraButtonMapping = [];
-cameraButtonMapping[1] = 2;
-cameraButtonMapping[2] = 3;
-cameraButtonMapping[3] = 4;
-cameraButtonMapping[4] = 5;
+cameraButtonMapping[1] = 10;
+cameraButtonMapping[2] = 11;
+cameraButtonMapping[3] = 12;
+cameraButtonMapping[4] = 13;
 
 function selectCamera(number) {
     console.log('Selected Camera ' + number);
     sendCommandToAllWebsocketClients('selectedCamera', number);
-    sendRequestToStreamDeck(10,cameraButtonMapping[number]);
+    sendRequestToStreamDeck(12,cameraButtonMapping[number]);
 }
 
 function sendRequestToStreamDeck(bank,button) {
