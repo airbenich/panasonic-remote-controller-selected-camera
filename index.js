@@ -2,6 +2,7 @@ var app = require('express')();
 var http = require('http');
 var httpServer = http.createServer(app);
 var io = require('socket.io')(httpServer);
+const axios = require('axios');
 
 console.log('\033c'); // clear terminal
 console.log('Panasonic AW-RP150 Selected Camera AUX Switcher');
@@ -58,34 +59,28 @@ server.on('connection', function(socket) {
 });
 
 var cameraButtonMapping = [];
-cameraButtonMapping[1] = 10;
-cameraButtonMapping[2] = 11;
-cameraButtonMapping[3] = 12;
-cameraButtonMapping[4] = 13;
+cameraButtonMapping[1] = 1;
+cameraButtonMapping[2] = 2;
+cameraButtonMapping[3] = 3;
+cameraButtonMapping[4] = 4;
 
 function selectCamera(number) {
     console.log('Selected Camera ' + number);
     sendCommandToAllWebsocketClients('selectedCamera', number);
-    sendRequestToStreamDeck(12,cameraButtonMapping[number]);
+    sendRequestToStreamDeck(12, 1, cameraButtonMapping[number]);
 }
 
-function sendRequestToStreamDeck(bank,button) {
-    http.get('http://172.17.121.11:8000/press/bank/' + bank + '/' + button, (resp) => {
-      let data = '';
-    
-      // A chunk of data has been recieved.
-      resp.on('data', (chunk) => {
-        data += chunk;
-      });
-    
-      // The whole response has been received. Print out the result.
-      resp.on('end', () => {
-        console.log(data);
-      });
-    
-    }).on("error", (err) => {
-      console.log("Error: " + err.message);
-    });
+function sendRequestToStreamDeck(bank, row, column) {
+  ///api/location/<page>/<row>/<column>/press
+  console.log('http://10.1.1.41:8000/api/location/' + bank + '/' + row + '/' + column + '/press');
+
+  axios.post('http://10.1.1.41:8000/api/location/' + bank + '/' + row + '/' + column + '/press')
+  .then(function (response) {
+    console.log("Response: " + response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
 
 
