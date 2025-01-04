@@ -72,9 +72,9 @@ function selectCamera(number) {
 
 function sendRequestToStreamDeck(bank, row, column) {
   ///api/location/<page>/<row>/<column>/press
-  console.log('http://10.1.1.41:8000/api/location/' + bank + '/' + row + '/' + column + '/press');
+  console.log('http://10.1.1.30:8000/api/location/' + bank + '/' + row + '/' + column + '/press');
 
-  axios.post('http://10.1.1.41:8000/api/location/' + bank + '/' + row + '/' + column + '/press')
+  axios.post('http://10.1.1.30:8000/api/location/' + bank + '/' + row + '/' + column + '/press')
   .then(function (response) {
     console.log("Response: " + response.data);
   })
